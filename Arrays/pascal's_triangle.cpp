@@ -1,3 +1,4 @@
+//look for better approach using binomial coefficients
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -22,6 +23,21 @@ vector<vector<int>> generate(int numRows) {
         vector<int> row(i+1,1);
         for(int j=1; j<i; ++j) {
             row[j] = pascal[i-1][j-1] + pascal[i-1][j]; 
+        }
+        pascal.push_back(row);
+    }
+
+    return pascal;
+}
+
+//Approach-2: Using binomial coefficients, C(n,k) = C(n,k-1)*(n-k+1)/k 
+vector<vector<int>> generate(int numRows) {
+    vector<vector<int>> pascal;
+    for(int i=0; i<numRows; ++i) {
+        vector<int> row(i+1,1);
+
+        for(int j=1; j<i; ++j) {
+            row[j] = row[j-1]*(i+1-j)/j;
         }
         pascal.push_back(row);
     }
