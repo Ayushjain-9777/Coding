@@ -1,4 +1,3 @@
-//look for better approach using binomial coefficients
 #include <bits/stdc++.h>
 using namespace std;
 
