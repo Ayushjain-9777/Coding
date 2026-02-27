@@ -1,4 +1,3 @@
-//check optimal approach
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -50,3 +49,22 @@ int countSubarrays(vector<int> nums, int k) {
     return count;
 }
 
+//Optmial Approach
+int countSubarrays(vector<int> nums, int k) {
+    int prefix = 0;
+    unordered_map<int,int> freq;
+    int count = 0;
+    freq[0] = 1;
+
+    for(int i=0; i<nums.size(); ++i) {
+        prefix ^= nums[i];
+
+        int target = prefix^k;
+
+        if(freq.find(target)!=freq.end())
+            count += freq[target];
+        freq[prefix]++;
+    }
+
+    return count;
+}

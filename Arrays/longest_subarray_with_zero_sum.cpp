@@ -1,4 +1,3 @@
-//look for a better approach
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -24,6 +23,7 @@ int main()
     return 0;
 }
 
+//Approach-1: Brute force approach, O(n^2) time complexity
 vector<int> longestSubarray(vector<int> nums)
 {
     int mx=0,sum=0;
@@ -44,6 +44,39 @@ vector<int> longestSubarray(vector<int> nums)
     }
 
     vector<int> result(nums.begin()+start,nums.begin()+end+1);
+
+    return result;
+}
+
+//Approach-2: Optimal approach, O(n) time complexity
+vector<int> longestSubarray(vector<int> nums)
+{
+    int mx = 0, sum = 0;
+    int start = 0, end = 0;
+    unordered_map<int,int> mpp;
+
+    for(int i=0; i<nums.size(); ++i) {
+        sum += nums[i];
+        
+        if(sum==0) {
+            mx = i+1;
+            end = i;
+        }
+        else {
+            if(mpp.find(sum)!=mpp.end()) {
+                if(i-mpp[sum] > mx) {
+                    mx = i - mpp[sum];
+                    start = mpp[sum]+1;
+                    end = i;
+                }
+            }
+            else {
+                mpp[sum] = i;
+            }
+        }
+    }
+
+    vector<int> result(nums.begin()+start, nums.begin()+end+1);
 
     return result;
 }
